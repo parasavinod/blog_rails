@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(title: "...", body: "...")
+    @article = Article.new(article_params)
 
     if @article.save
       redirect_to @article
@@ -20,7 +20,13 @@ class ArticlesController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  private
+    def article_params
+      params.require(:article).permit(:title, :body)
+    end
 end
-# redirect_to will cause the browser to make a new request, whereas render renders the specified view for the current request.
-# It is important to use redirect_to after mutating the database or application state. Otherwise, if the user refreshes the page,
-#  the browser will make the same request, and the mutation will be repeated.
+# Submitted form data is put into the params Hash, alongside captured route parameters. Thus, the create action can access the submitted title via
+# params[:article][:title] and the submitted body via params[:article][:body]
+#  However, we must still specify what values are allowed in that Hash. Otherwise, a malicious user could potentially submit extra form fields
+#  and overwrite private data.
