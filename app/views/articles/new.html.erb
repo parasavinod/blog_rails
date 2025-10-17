@@ -1,0 +1,18 @@
+<h1>New Article</h1>
+<%# We will use a feature of Rails called a form builder to create our form. Using a form builder,  %>
+<%# we can write a minimal amount of code to output a form that is fully configured and follows Rails conventions. %>
+<%= form_with model: @article do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
